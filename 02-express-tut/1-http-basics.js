@@ -1,19 +1,32 @@
 const http = require("http");
 
+const { readFileSync } = require("fs");
+const homePage = readFileSync("./index.html");
+
 //createServer method gets hit every time user hits the server
 const server = http.createServer((req, res) => {
-  //to know what route we are hitting we use the url method
-  console.log(req.url);
+  const url = req.url;
+  console.log(url);
+  if (url === "/") {
+    //home page
 
-  //to know what kind of request is coming
-  console.log(req.method);
-
-  //meta data for our respone
-  // status-code , {type-of-data we are sending}
-  res.writeHead(200, { "content-type": "text/html" });
-  //we must always include res.end for each response
-  res.write("<h1>Home Page</h1>");
-  res.end();
+    //meta data for our response
+    // status-code , {type-of-data we are sending}
+    res.writeHead(200, { "content-type": "text/html" });
+    //we must always include res.end for each response
+    res.write(homePage);
+    res.end();
+  } else if (url === "/about") {
+    //about page
+    res.writeHead(200, { "content-type": "text/html" });
+    res.write("<h1>About page</h1>");
+    res.end();
+  } else {
+    //404 page
+    res.writeHead(404, { "content-type": "text/html" });
+    res.write("<h1>404 page</h1>");
+    res.end();
+  }
 });
 
 server.listen(5000, () => {
