@@ -1,8 +1,13 @@
 const http = require("http");
 
+//createServer method gets hit every time user hits the server
 const server = http.createServer((req, res) => {
-  console.log("user hit the server");
-  res.end("Hey! There user guy!!");
+  //meta data for our respone
+  // status-code , {type-of-data we are sending}
+  res.writeHead(200, { "content-type": "text/html" });
+  //we must always include res.end for each response
+  res.write("<h1>Home Page</h1>");
+  res.end();
 });
 
 server.listen(5000, () => {
