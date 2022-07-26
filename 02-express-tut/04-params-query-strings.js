@@ -31,6 +31,11 @@ This object defaults to {}. */
   const singleProduct = products.find(
     (product) => product.id === Number(productId)
   );
+
+  if (!singleProduct) {
+    res.status(404).send("Product doesn't exist");
+  }
+
   res.send(singleProduct);
 });
 
