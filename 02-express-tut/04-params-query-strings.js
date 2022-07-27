@@ -40,8 +40,27 @@ This object defaults to {}. */
 });
 
 app.get("/api/products/v1/query", (req, res) => {
-  console.log(req.query);
-  res.send("hello world people of wakanda");
+  // console.log(req.query);
+  const { search, limit } = req.query;
+  console.log(search, limit, req.query);
+  let sortedProducts = [...products];
+
+  if (search) {
+    sortedProducts = sortedProducts.filter((product) => {
+      return product.name.startsWith(search);
+    });
+  }
+
+  if (limit) {
+    sortedProducts = sortedProducts.slice(0, Number(limit));
+  }
+
+  if (sortedProducts.length < 1) {
+    res.status(200).send("No products matched your search");
+  }
+
+  res.status(200).json(sortedProducts);
+  // res.send(products);
 });
 
 app.get("/api/products/:productId/reviews/:reviewId", (req, res) => {
