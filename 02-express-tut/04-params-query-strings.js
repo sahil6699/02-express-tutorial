@@ -39,6 +39,11 @@ This object defaults to {}. */
   return res.json(singleProduct);
 });
 
+app.get("/api/products/v1/query", (req, res) => {
+  console.log(req.query);
+  res.send("hello world people of wakanda");
+});
+
 app.get("/api/products/:productId/reviews/:reviewId", (req, res) => {
   console.log(req.params);
   res.send("hello world");
