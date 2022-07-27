@@ -33,10 +33,10 @@ This object defaults to {}. */
   );
 
   if (!singleProduct) {
-    res.status(404).send("Product doesn't exist");
+    return res.status(404).json("Product doesn't exist");
   }
 
-  res.send(singleProduct);
+  return res.json(singleProduct);
 });
 
 app.listen(5000, () => {
