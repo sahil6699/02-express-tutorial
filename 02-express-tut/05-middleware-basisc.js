@@ -7,7 +7,7 @@ const app = express();
 // the way we execute multiple middleware functions is by passing them in a array
 // the order of passing the in the array matters as this decides which middleware will run first
 //here logger  will run first then authorize
-app.use([logger, authorize]);
+// app.use([logger, authorize]);
 
 //we can give the path to the app.use
 // aur app.use ke andar ke middleware sirf unn routes pr apply hoga jo iss mentioned routes ke baad ayenge
@@ -26,8 +26,9 @@ app.get("/about", (req, res) => {
 app.get("/api/products", (req, res) => {
   res.send("Products");
 });
-
-app.get("/api/items", (req, res) => {
+//how to apply multiple middleware to a single route
+//now logger and authorize will only be applied to the api/items route
+app.get("/api/items", [logger, authorize], (req, res) => {
   console.log(req.user);
   res.send("Items");
 });

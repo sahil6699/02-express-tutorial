@@ -1,6 +1,6 @@
 const authorize = (req, res, next) => {
   const { user } = req.query;
-  console.log(user);
+  // console.log(user);
   if (user === "john") {
     req.user = { name: "john", id: 23 };
     next();
