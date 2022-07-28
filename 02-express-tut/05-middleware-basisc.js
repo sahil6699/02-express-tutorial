@@ -1,18 +1,19 @@
 const express = require("express");
 const logger = require("./logger");
+const authorize = require("./authorize");
 const app = express();
 
 //req => middleware => response
-//the middleware  we mention in app.use gets applied to all the routes - if it is placed at the top
-//the order matters - if we apply it to below a route then it would not be applied to the route above it would only be applied to all the routes which are below it
-//hence we keep the middleware which has to be applied on all the routes on the top
-// app.use(logger);
+// the way we execute multiple middleware functions is by passing them in a array
+// the order of passing the in the array matters as this decides which middleware will run first
+//here logger  will run first then authorize
+app.use([logger, authorize]);
 
 //we can give the path to the app.use
 // aur app.use ke andar ke middleware sirf unn routes pr apply hoga jo iss mentioned routes ke baad ayenge
 // for eg: route:- /api , tuh middleware khali /api/productcs , /api/items/teddy
 // in jaise routes pr hi apply hoga , baki kisi route pr apply ni hoga
-app.use("/api", logger);
+// app.use("/api", logger);
 
 app.get("/", (req, res) => {
   res.send("Home Page");
@@ -27,6 +28,7 @@ app.get("/api/products", (req, res) => {
 });
 
 app.get("/api/items", (req, res) => {
+  console.log(req.user);
   res.send("Items");
 });
 
