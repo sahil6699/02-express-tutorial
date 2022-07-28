@@ -4,16 +4,12 @@ const authorize = require("./authorize");
 const app = express();
 
 //req => middleware => response
-// the way we execute multiple middleware functions is by passing them in a array
-// the order of passing the in the array matters as this decides which middleware will run first
-//here logger  will run first then authorize
-// app.use([logger, authorize]);
+//options for setting up of middleware = own / express / third party
 
-//we can give the path to the app.use
-// aur app.use ke andar ke middleware sirf unn routes pr apply hoga jo iss mentioned routes ke baad ayenge
-// for eg: route:- /api , tuh middleware khali /api/productcs , /api/items/teddy
-// in jaise routes pr hi apply hoga , baki kisi route pr apply ni hoga
-// app.use("/api", logger);
+//now app.use expects a middleware as argument viz express.static
+//this middle is always looking for a static/public folder to display all the static files within it
+// it has some code writeen in it like we wrote for authorize middleware , hence it is able to show us the public files we have written
+app.use(express.static("./public"));
 
 app.get("/", (req, res) => {
   res.send("Home Page");
