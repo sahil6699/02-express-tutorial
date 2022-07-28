@@ -1,6 +1,7 @@
 const express = require("express");
 const logger = require("./logger");
 const authorize = require("./authorize");
+const morgan = require("morgan");
 const app = express();
 
 //req => middleware => response
@@ -9,7 +10,11 @@ const app = express();
 //now app.use expects a middleware as argument viz express.static
 //this middle is always looking for a static/public folder to display all the static files within it
 // it has some code writeen in it like we wrote for authorize middleware , hence it is able to show us the public files we have written
-app.use(express.static("./public"));
+// app.use(express.static("./public"));
+
+//third party middleware function
+//tiny returns the method the port and the time of the request
+app.use(morgan("short"));
 
 app.get("/", (req, res) => {
   res.send("Home Page");
