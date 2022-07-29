@@ -1,4 +1,3 @@
-const { application } = require("express");
 const express = require("express");
 const app = express();
 let { people } = require("./data");
@@ -43,6 +42,13 @@ app.post("/login", (req, res) => {
   }
   console.log(req.body);
   res.status(401).send("Please enter the given credentials");
+});
+
+app.put("/api/people/:id", (req, res) => {
+  const { id } = req.params;
+  const { name } = req.body;
+  console.log(id, name);
+  res.send("hello world duniya");
 });
 
 app.listen(5000, () => {
